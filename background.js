@@ -1,13 +1,13 @@
 /*--------------------------- FACEBOOK LOGIN -----------------------------------*/
 
 
-	chrome.runtime.onMessage.addListener(
-  		function(request, sender, sendResponse) {
+chrome.runtime.onMessage.addListener(
+	function(request, sender, sendResponse) {
 		if (request.loginFace)
 		{
 			chrome.tabs.onUpdated.addListener(onFacebookLogin);
 		}
-	});
+});
 
 var token;
 var expires;
@@ -31,9 +31,9 @@ function onFacebookLogin(tabid,attachInfo,tab)
 
 			request.onload = function() {
 			  if (request.status >= 200 && request.status < 400) {
-			    // var data = JSON.parse(request.responseText);
 			    console.log(request.responseText);
 			    chrome.runtime.sendMessage({loginFaceDone: request.responseText});
+			    chrome.tabs.onUpdated.removeListener(onFacebookLogin);
 			  } else {
 			    console.log('Error acceso');
 			  }
